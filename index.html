@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+    <head>
+        <title>When is the next Codegirls meeting?</title>
+        <meta charset="utf-8" />
+    </head>
+
+    <body>
+        <h1>Next meeting on <span id="when">MYSTERY DAY!</span></h1>
+
+        <p>We're meeting bi-weekly at the <a href="http://sublab.org">sublab</a>.</p>
+
+        <script type="text/javascript">
+            var oneDay = 1000 * 60 * 60 * 24;
+            var exampleDate = new Date("2014-03-11T19:00:00+0100");
+
+            function nextMeeting(today) {
+                var exampleTime = exampleDate.getTime();
+                var todayTime = today.getTime();
+
+                var diffInDays = (todayTime - exampleTime) / oneDay;
+                return new Date(todayTime + (14 - (diffInDays % 14)) * oneDay);
+            }
+
+            function fullMonth(month) {
+                switch (month) {
+                    case 0: return "January";
+                    case 1: return "February";
+                    case 2: return "March";
+                    case 3: return "April";
+                    case 4: return "May";
+                    case 5: return "June";
+                    case 6: return "July";
+                    case 7: return "August";
+                    case 8: return "September";
+                    case 9: return "October";
+                    case 10: return "November";
+                    case 11: return "December";
+                    default: throw new Error("Not a valid month number (0-11 inclusive allowed)");
+                }
+            }
+
+            function prettyDay(day) {
+                switch (day) {
+                    case 1: return "1st";
+                    case 2: return "2nd";
+                    case 3: return "3rd";
+                    default: return day + "th";
+                }
+            }
+
+            function prettyTime(date) {
+                var hours = date.getHours();
+                var minutes = date.getMinutes();
+                return ("0" + hours).slice(-2) + ":" + ("0" + minutes).slice(-2);
+            }
+
+            function prettyDate(date) {
+                return prettyDay(date.getDate()) + " of " + fullMonth(date.getMonth()) + " " + date.getFullYear()
+                    + ", " + prettyTime(date);
+            }
+
+            var whenElement = document.getElementById("when");
+            var nextDate = nextMeeting(new Date());
+            whenElement.textContent = prettyDate(nextDate);
+        </script>
+    </body>
+</html>
